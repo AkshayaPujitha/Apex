@@ -26,36 +26,8 @@
         <button type="submit" class="btn btn-primary">Start Crawling</button>
     </form>
 
-    <!-- Display the response after submitting -->
-    <div id="response" class="mt-4"></div>
 </div>
 <script src="{{ url_for('static', filename='scripts/crawler.js') }}"></script>
-
-<script>
-    document.getElementById("crawlerForm").addEventListener("submit", async function (event) {
-        event.preventDefault();
-
-        const formData = {
-            seed_url: document.getElementById("seed_url").value,
-            keywords: document.getElementById("keywords").value.split(",").map(kw => kw.trim())
-        };
-
-        try {
-            const response = await fetch("/crawl", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-            });
-
-            const result = await response.json();
-            document.getElementById("response").innerHTML = `<p>${result.message}</p>`;
-        } catch (error) {
-            document.getElementById("response").innerHTML = `<p style="color: red;">Error occurred: ${error.message}</p>`;
-        }
-    });
-</script>
 
 </body>
 </html>
