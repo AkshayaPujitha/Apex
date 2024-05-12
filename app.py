@@ -4,12 +4,12 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import os
 import json
-from utils import server
+from utils import client
 
 load_dotenv()
 
 app = Flask(__name__,template_folder='src')
-app.secret_key = os.environ.get('SECRET_KEY')
+app.secret_key = os.getenv('SECRET_KEY')
 
 @app.route('/')
 def index():
@@ -25,7 +25,7 @@ def crawl():
     print("heyyyy", seed_url, keywords)
     
     # Ensure that the `main` function returns a dictionary or list that can be serialized
-    results = server.main(seed_url, keywords)
+    results = client.crawl_request(seed_url, keywords)
     session['results'] = results
     # Convert results to JSON format and return with the appropriate status
     return jsonify({
@@ -40,9 +40,6 @@ def result_page():
     print("here",results)
     # Pass data to the results.html template
     return render_template('result.html',results=results)
-
-
-
 
 
 
