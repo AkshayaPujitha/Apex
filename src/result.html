@@ -2,14 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crawl Results</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <title>Web Crawl Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .results-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .result-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .snippet {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        a:hover {
+            color: #388E3C;
+        }
+    </style>
 </head>
 <body>
+    <h1>Web Crawl Results</h1>
     <div class="results-container">
-        <h1>Crawl Results</h1>
-        <div id="results"></div>
+        {% for result in results %}
+        <div class="result-item">
+            <a href="{{ result.url }}" target="_blank">{{ result.url }}</a>
+            <div class="snippet">{{ result.snippet }}</div>
+            
+        </div>
+        {% endfor %}
     </div>
 </body>
 </html>
