@@ -51,11 +51,13 @@ class Crawler:
         text_snippet = ' '.join(soup.get_text().split()[:10])  # Capture the first 10 words
 
         if self.keyword and (self.keyword in text_snippet.lower() or self.keyword in url.lower()):
-            #logging.info(f"Found keyword in: {url}")
+            logging.info(f"Found keyword in: {url}")
             self.keyword_url.append({'url': url, 'snippet': text_snippet})
-            self.visited_urls.append(url)
+            
         elif not self.keyword:
-            self.visited_urls.append({'url': url, 'snippet': text_snippet})
+            pass
+        
+        self.visited_urls.append({'url': url, 'snippet': text_snippet})
 
         for link in self.get_linked_urls(url, html):
             if link and '://' not in link:
@@ -68,21 +70,23 @@ class Crawler:
             url = self.urls_to_visit.pop(0)
             try:
                 if url.startswith(self.original_url):
-                    #logging.info(f'Crawling: {url}')
-                    if self.keyword and len(self.keyword_url) == 10:
+                    logging.info(f'Crawling: {url}')
+                    print("Calling",url)
+                    if (self.keyword and len(self.keyword_url) == 10):
                         return self.keyword_url
-                    elif not self.keyword and len(self.visited_urls) == 100:
-                        return self.visited_urls
+                    elif self.keyword and len(self.visited_urls)==200:
+                        return self.keyword_url+self.visited_urls[:10]
+                    elif not self.keyword and len(self.visited_urls)==100:
+                        return self.visited_urls[:10]
                     self.crawl(url)
             except Exception as e:
                 print(e)
                 pass
-                #logging.info(f'Failed to crawl: {url} due to {e}')
+                print("Failed to crawl : ",url)
+                logging.info(f'Failed to crawl: {url} due to {e}')
                 
 
-        if self.keyword:
-            return self.keyword_url
-        return self.visited_urls
+        return self.keyword_url if self.keyword else self.visited_urls
 
 
 if __name__ == "__main__":
