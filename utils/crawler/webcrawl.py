@@ -16,10 +16,11 @@ class Crawler:
         self.visited_urls = []
         self.keyword_url = []
         self.urls_to_visit = [url]
+        self.session=requests.Session()
 
     def get_html_content(self, url):
         """Fetches HTML content of the given URL."""
-        return session.get(url).text
+        return self.session.get(url).text
 
     def get_linked_urls(self, url, html):
         """Extracts all linked URLs from the page HTML."""
@@ -74,6 +75,7 @@ class Crawler:
                         return self.visited_urls
                     self.crawl(url)
             except Exception as e:
+                print(e)
                 pass
                 #logging.info(f'Failed to crawl: {url} due to {e}')
                 

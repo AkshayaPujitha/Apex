@@ -1,6 +1,7 @@
 import threading
 from queue import Queue
 from utils.crawler.webcrawl import Crawler
+import socket
 
 # Function to run a crawler within a thread
 def thread_crawler(url, keyword, queue):
@@ -9,12 +10,12 @@ def thread_crawler(url, keyword, queue):
     results = crawler_instance.run()
     queue.put((url, results))
 
-def main(urls, keywords):
+def main(url, keywords):
     queue = Queue()
     threads = []
 
     # Create and start a thread for each URL
-    for url,keyword in zip(urls,keywords):
+    for keyword in keywords:
         thread = threading.Thread(target=thread_crawler, args=(url, keyword, queue))
         thread.start()
         threads.append(thread)
@@ -32,9 +33,6 @@ def main(urls, keywords):
         return sitemap
 
 if __name__ == "__main__":
-    urls_to_crawl = [
-        "https://www.w3schools.com/",
-        "https://www.geeksforgeeks.org/"
-    ]
+    urls_to_crawl = "https://www.w3schools.com/",
     keyword = ["python"]
     main(urls_to_crawl, keyword)
