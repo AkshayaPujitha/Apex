@@ -4,9 +4,8 @@ import json
 def crawl_request(url,keywords):
     host = '127.0.0.1'
     port = 65432
-
     request_data = json.dumps({'url': url, 'keywords': keywords})
-    print("hereeeee")
+    print("hereeeee in client")
     client=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     client.connect((host,port))
 

@@ -15,12 +15,12 @@
     <form id="crawlerForm" method="post" action="/crawl">
         <div class="form-group">
             <label for="seed_url">Starting URL:</label>
-            <input type="url" id="seed_url" name="url" class="form-control" placeholder="Enter the starting URL" required>
+            <input type="url" id="seed_url" name="seed_url" class="form-control" placeholder="Enter URLs separated by commas(http://example1.com,http://example2.com)" required>
         </div>
 
         <div class="form-group">
             <label for="keywords">Keywords (comma-separated):</label>
-            <input type="text" id="keywords" name="keywords" class="form-control" placeholder="Enter keywords (e.g., data, science)" required>
+            <input type="text" id="keywords" name="keywords" class="form-control" placeholder="Enter keywords (e.g., data, science)">
         </div>
 
         <button type="submit" class="btn btn-primary">Start Crawling</button>

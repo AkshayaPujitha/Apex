@@ -18,9 +18,10 @@ def index():
 @app.route('/crawl',methods=['POST'])
 def crawl():
     if not request.is_json :
-        print("here")
+        print("here in crawl")
     data = request.get_json()
     seed_url = data.get('seed_url')
+    #seed_url=seed_url.split(',')
     keywords = data.get('keywords', [])
     print("heyyyy", seed_url, keywords)
     
@@ -37,7 +38,7 @@ def crawl():
 @app.route('/result')
 def result_page():
     results = session.get('results', [])
-    print("here",results)
+    print("here in result page",results)
     # Pass data to the results.html template
     return render_template('result.html',results=results)
 

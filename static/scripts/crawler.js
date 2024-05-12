@@ -2,7 +2,9 @@ document.getElementById("crawlerForm").addEventListener("submit", async function
     event.preventDefault();
 
     const formData = {
-        seed_url: document.getElementById("seed_url").value,
+        seed_url: document.getElementById("seed_url").value
+        .split(",")
+        .map(url => url.trim()),
         keywords: document.getElementById("keywords").value.split(",").map(kw => kw.trim())
     };
 

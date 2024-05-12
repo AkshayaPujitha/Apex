@@ -4,20 +4,21 @@ from crawler.webcrawl import Crawler
 import socket
 import json
 
-# Function to run a crawler within a thread
+# Function to run a crawler within a thread for a single keyword
 def thread_crawler(url, keyword, queue):
-    print(f"Starting crawler for: {url}")
+    print(f"Starting crawler for: {url} with keyword: {keyword}")
     crawler_instance = Crawler(url, keyword)
     results = crawler_instance.run()
-    queue.put((url, results))
+    queue.put(results)  # Just push results without keyword
 
-def main(url, keywords):
-    queue = Queue()
+# Function to manage crawling for a single URL with multiple keywords
+def url_crawler(url, keywords, queue):
+    sub_queue = Queue()
     threads = []
 
-    # Create and start a thread for each URL
+    # Create and start a thread for each keyword
     for keyword in keywords:
-        thread = threading.Thread(target=thread_crawler, args=(url, keyword, queue))
+        thread = threading.Thread(target=thread_crawler, args=(url, keyword, sub_queue))
         thread.start()
         threads.append(thread)
 
@@ -25,28 +26,50 @@ def main(url, keywords):
     for thread in threads:
         thread.join()
 
-    # Print results from all threads
+    # Aggregate results for this URL
+    aggregated_results = []
+    while not sub_queue.empty():
+        results = sub_queue.get()
+        aggregated_results.extend(results)  # Combine all results into one list
+
+    # Push aggregated results to the main queue
+    queue.put((url, aggregated_results))
+
+# Main function to handle multiple URLs and their keywords
+def main(urls, keywords):
+    queue = Queue()
+    threads = []
+
+    # Create and start a thread for each URL
+    for url in urls:
+        thread = threading.Thread(target=url_crawler, args=(url, keywords, queue))
+        thread.start()
+        threads.append(thread)
+
+    # Wait for all threads to complete
+    for thread in threads:
+        thread.join()
+
+    # Collect all results
+    all_results = {}
     while not queue.empty():
-        url, sitemap = queue.get()
-        print(f"Results for {url}:")
-        for entry in sitemap:
-            print(f"URL: {entry['url']} - Snippet: {entry['snippet']}")
-        return sitemap
-    
+        url, results = queue.get()
+        all_results[url] = results
+    return all_results
+
+# Function to handle client connections
 def handle_client(conn, addr):
     print(f"[NEW CONNECTION] {addr} connected.")
     try:
         # Receive data from the client
         data = conn.recv(1024).decode('utf-8')
         request = json.loads(data)
-
-        url = request.get('url', '')
+        urls = request.get('url', [])
         keywords = request.get('keywords', [])
 
-        results=main(url,keywords)
+        results = main(urls, keywords)
         response = json.dumps(results)
         conn.sendall(response.encode('utf-8'))
-
 
     except Exception as e:
         error_message = f"[ERROR] Exception occurred: {e}"
@@ -56,7 +79,7 @@ def handle_client(conn, addr):
         conn.close()
         print(f"[DISCONNECTED] {addr} disconnected.")
 
-
+# Function to start the server
 def start_server(host='127.0.0.1', port=65432):
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind((host, port))

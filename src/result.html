@@ -48,12 +48,14 @@
 <body>
     <h1>Web Crawl Results</h1>
     <div class="results-container">
-        {% for result in results %}
+        {% for url, entries in results.items() %}
+        <h2>Results for {{ url }}</h2>
+        {% for entry in entries %}
         <div class="result-item">
-            <a href="{{ result.url }}" target="_blank">{{ result.url }}</a>
-            <div class="snippet">{{ result.snippet }}</div>
-            
+            <a href="{{ entry['url'] }}" target="_blank">{{ entry['url'] }}</a>
+            <div class="snippet">{{ entry['snippet'] }}</div>
         </div>
+        {% endfor %}
         {% endfor %}
     </div>
 </body>
