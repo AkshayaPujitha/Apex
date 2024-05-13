@@ -10,11 +10,9 @@ def crawl_request(url,keywords):
     client.connect((host,port))
 
     try:
-        # Send data to the server
         client.sendall(request_data.encode('utf-8'))
 
-        # Receive response from the server
-        response = client.recv(4096*10)  # Adjust this if needed
+        response = client.recv(4096*10)  
         results = json.loads(response.decode('utf-8'))
 
         return results
