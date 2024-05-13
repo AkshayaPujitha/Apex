@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Crawl Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/result.css"> 
+
+</head>
+<body>
+    <h1 class="text-center highlight">APEX</h1>
+    <div class="results-container">
+        {% for url, entries in results.items() %}
+        <h3>Results for {{ url }}</h3>
+        {% for entry in entries %}
+        <div class="result-item">
+            <a href="{{ entry['url'] }}" target="_blank">{{ entry['url'] }}</a>
+            <div class="snippet">{{ entry['snippet'] }}</div>
+        </div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+</body>
+</html>

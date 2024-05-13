@@ -9,11 +9,9 @@ class DataBaseConnection():
         pass
     def connect():
         try:
-            mongo_db_password = os.environ.get('MONGO_DB_PASSWORD')
-            mongo_db_username=os.environ.get('USERNAME')
-            uri =f"mongodb+srv://{mongo_db_username}:{mongo_db_password}@cluster0.gqhkq1b.mongodb.net/"
+            url=os.environ('URL')
             # Create a new client and connect to the server
-            client = MongoClient(uri, server_api=ServerApi('1'))
+            client = MongoClient(url, server_api=ServerApi('1'))
             db = client.admin
             print(db)
 

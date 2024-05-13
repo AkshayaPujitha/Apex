@@ -1,0 +1,19 @@
+body {
+    background-color: #f8f9fa;
+}
+.container {
+    max-width: 600px;
+    margin-top: 50px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.text-center {
+    margin-bottom: 30px;
+}
+.highlight {
+    font-family: 'Georgia', serif;
+    color: #000a14;
+    font-size: 3rem;
+    font-weight: bold;
+}
