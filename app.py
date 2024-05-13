@@ -18,12 +18,12 @@ def index():
 @app.route('/crawl',methods=['POST'])
 def crawl():
     if not request.is_json :
-        print("here in crawl")
+        print("Its not in json format")
     data = request.get_json()
     seed_url = data.get('seed_url')
     #seed_url=seed_url.split(',')
     keywords = data.get('keywords', [])
-    print("heyyyy", seed_url, keywords)
+    print("url,keywords", seed_url, keywords)
     
     # Ensure that the `main` function returns a dictionary or list that can be serialized
     results = client.crawl_request(seed_url, keywords)
