@@ -3,53 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Web Crawl Results</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-            color: #4CAF50;
-        }
-        .results-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .result-item {
-            margin-bottom: 20px;
-            padding: 10px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .result-item:last-child {
-            border-bottom: none;
-        }
-        .snippet {
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-        a {
-            text-decoration: none;
-            color: #4CAF50;
-            font-weight: bold;
-        }
-        a:hover {
-            color: #388E3C;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/result.css"> 
+
 </head>
 <body>
-    <h1>Web Crawl Results</h1>
+    <h1 class="text-center highlight">APEX</h1>
     <div class="results-container">
         {% for url, entries in results.items() %}
-        <h2>Results for {{ url }}</h2>
+        <h3>Results for {{ url }}</h3>
         {% for entry in entries %}
         <div class="result-item">
             <a href="{{ entry['url'] }}" target="_blank">{{ entry['url'] }}</a>
