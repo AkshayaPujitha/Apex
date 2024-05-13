@@ -31,6 +31,12 @@ Run Shell Script
   ./run.sh
 ```
 
+Run Flask Server
+```bash
+  python app.py 
+```
+
+
 ## Running Tests
 
 To run tests, run the following command
