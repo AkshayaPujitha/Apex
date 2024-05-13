@@ -71,11 +71,11 @@ class Crawler:
             try:
                 if url.startswith(self.original_url):
                     logging.info(f'Crawling: {url}')
-                    print("Calling",url)
+        
                     if (self.keyword and len(self.keyword_url) == 10):
                         return self.keyword_url
-                    elif self.keyword and len(self.visited_urls)==200:
-                        return self.keyword_url+self.visited_urls[:10]
+                    elif self.keyword and len(self.visited_urls)==100:
+                        return self.keyword_url+self.visited_urls[:10-len(self.keyword)+1]
                     elif not self.keyword and len(self.visited_urls)==100:
                         return self.visited_urls[:10]
                     self.crawl(url)

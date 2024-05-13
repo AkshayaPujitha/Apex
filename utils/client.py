@@ -14,11 +14,12 @@ def crawl_request(url,keywords):
         client.sendall(request_data.encode('utf-8'))
 
         # Receive response from the server
-        response = client.recv(4096)  # Adjust this if needed
+        response = client.recv(4096*10)  # Adjust this if needed
         results = json.loads(response.decode('utf-8'))
 
         return results
     except Exception as e:
+        print("Error in client")
         return {"error": str(e)}
     finally:
         client.close()

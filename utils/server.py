@@ -55,6 +55,7 @@ def main(urls, keywords):
     while not queue.empty():
         url, results = queue.get()
         all_results[url] = results
+    #print(all_results)
     return all_results
 
 # Function to handle client connections
